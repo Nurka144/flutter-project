@@ -1,5 +1,6 @@
 import 'package:app_mobile_test/components/rounded_button.dart';
 import 'package:app_mobile_test/components/text_field_container.dart';
+import 'package:app_mobile_test/screens/Home.dart';
 import 'package:app_mobile_test/screens/components/login/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -66,7 +67,11 @@ class _LoginBodyState extends State<LoginBody> {
           ),
           RoundedButton(
             text: "Войти",
-            press: () {},
+            press: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return HomeScreen();
+              }));
+            },
           )
         ],
       ),
