@@ -1,12 +1,24 @@
 import 'package:app_mobile_test/components/rounded_button.dart';
-import 'package:app_mobile_test/components/rounded_input_field.dart';
-import 'package:app_mobile_test/components/rounded_password_filed.dart';
+import 'package:app_mobile_test/components/text_field_container.dart';
 import 'package:app_mobile_test/screens/components/login/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginBody extends StatelessWidget {
-  const LoginBody({Key key}) : super(key: key);
+class LoginBody extends StatefulWidget {
+  LoginBody({Key key}) : super(key: key);
+
+  _LoginBodyState createState() => _LoginBodyState();
+}
+
+class _LoginBodyState extends State<LoginBody> {
+  bool data = true;
+
+  void _seePassword() {
+    setState(() {
+      data = !data;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -26,13 +38,31 @@ class LoginBody extends StatelessWidget {
             "assets/icons/login.svg",
             height: size.height * 0.4,
           ),
-          RoundedInputField(
-            hintText: "Введите email",
-            icon: Icons.person,
-            onChanged: (value) => {},
+          TextFieldContainer(
+            child: TextField(
+              onChanged: (value) {
+                print(value);
+              },
+              decoration: InputDecoration(
+                icon: Icon(Icons.person),
+                hintText: "Введите email",
+                border: InputBorder.none,
+              ),
+            ),
           ),
-          RoundedPasswordFiled(
-            onChanged: (value) => {},
+          TextFieldContainer(
+            child: TextField(
+              obscureText: data,
+              decoration: InputDecoration(
+                icon: Icon(Icons.lock),
+                hintText: "Введите пароль",
+                border: InputBorder.none,
+                suffixIcon: IconButton(
+                  onPressed: _seePassword,
+                  icon: Icon(Icons.visibility),
+                ),
+              ),
+            ),
           ),
           RoundedButton(
             text: "Войти",
