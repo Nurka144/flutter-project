@@ -68,9 +68,7 @@ class _LoginBodyState extends State<LoginBody> {
           RoundedButton(
             text: "Войти",
             press: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HomeScreen();
-              }));
+              Navigator.pushNamed(context, HomeScreen.routerName);
             },
           )
         ],

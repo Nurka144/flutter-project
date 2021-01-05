@@ -1,4 +1,5 @@
 import 'package:app_mobile_test/constants.dart';
+import 'package:app_mobile_test/routes.dart';
 import 'package:app_mobile_test/screens/Welcome.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        routes: routes,
         title: 'Flutter Demo',
         theme: ThemeData(
             // This is the theme of your application.
