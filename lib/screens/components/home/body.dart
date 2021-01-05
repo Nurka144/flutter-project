@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeBody extends StatelessWidget {
   @override
@@ -33,13 +34,35 @@ class HomeBody extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: 46,
-                  height: 46,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF979797).withOpacity(.1),
-                    shape: BoxShape.circle,
-                  ),
+                Stack(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      width: 46,
+                      height: 46,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF979797).withOpacity(.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset("assets/icons/Bell.svg"),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        width: 16,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 1.5,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
