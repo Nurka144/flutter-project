@@ -1,8 +1,16 @@
+
 import 'package:app_mobile_test/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeBody extends StatelessWidget {
+class HomeBody extends StatefulWidget {
+  HomeBody({Key key}) : super(key: key);
+
+  _HomeBodyState createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -84,67 +92,193 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.only(top: 35),
-              width: double.infinity,
-              height: 90,
-              decoration: BoxDecoration(
-                color: Color(0xFF4A3298),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text.rich(
-                TextSpan(text: 'Welcome Тузелбеков Нурбек!'),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
+                padding: EdgeInsets.only(top: 35),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xFF4A3298),
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ...List.generate(
-                    categorys.length,
-                    (index) => SizedBox(
-                      width: 55,
-                      child: Column(
-                        children: [
-                          AspectRatio(
-                            aspectRatio: 1,
-                            child: Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFECDF),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: IconButton(
-                                icon:
-                                    SvgPicture.asset(categorys[index]["icon"]),
-                                onPressed: () => print(index),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            categorys[index]["text"],
-                            textAlign: TextAlign.center,
-                          )
-                        ],
+                child: Column(
+                  children: [
+                    Container(
+                      height: 30,
+                      width: double.infinity,
+                      child: Text.rich(
+                        TextSpan(text: 'Добро пожаловать, Тузелбеков Нурбек!'),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  )
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 31,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ...List.generate(
+                      categorys.length,
+                      (index) => SizedBox(
+                        width: 55,
+                        child: Column(
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                padding: EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFFFECDF),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: IconButton(
+                                  icon: SvgPicture.asset(
+                                      categorys[index]["icon"]),
+                                  onPressed: () => print(index),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              categorys[index]["text"],
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SectionTitle(
+              text: "Последние просмотренные",
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  BannerSlider(),
+                  BannerSlider(),
+                  BannerSlider(),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BannerSlider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 20,
+      ),
+      child: SizedBox(
+        width: 240,
+        height: 100,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: [
+              Image.asset(
+                "assets/images/image_banner.png",
+                fit: BoxFit.cover,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF343434).withOpacity(0.4),
+                      Color(0xFF343434).withOpacity(0.15),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
+                child: Text.rich(
+                  TextSpan(
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    children: [
+                      TextSpan(text: "Смартфон \n"),
+                      TextSpan(text: "Модель: Samsung"),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  const SectionTitle({
+    Key key,
+    this.text,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 35,
+        left: 15,
+        right: 15,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          Text(
+            "Подробнее",
+            style: TextStyle(
+              color: Colors.black26,
+            ),
+          ),
+        ],
       ),
     );
   }
