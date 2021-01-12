@@ -1,4 +1,4 @@
-
+import 'package:app_mobile_test/screens/QRSceen.dart';
 import 'package:app_mobile_test/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +10,6 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -57,7 +56,12 @@ class _HomeBodyState extends State<HomeBody> {
               "assets/icons/scan.svg",
               height: SizeConfig.defaultSize * 2,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => QRScreen()),
+              );
+            },
           ),
           Center(
             child: Text(
