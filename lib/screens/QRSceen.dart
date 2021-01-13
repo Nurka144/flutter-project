@@ -1,71 +1,79 @@
-import 'dart:async';
-
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
-class QRScreen extends StatefulWidget {
+class ScanQRCode extends StatefulWidget {
+  ScanQRCode({Key key}) : super(key: key);
+
   @override
-  _ScanState createState() => new _ScanState();
+  _ScanQRCodeState createState() => _ScanQRCodeState();
 }
 
-class _ScanState extends State<QRScreen> {
-  String barcode = "";
-
-  @override
-  initState() {
-    super.initState();
-  }
+class _ScanQRCodeState extends State<ScanQRCode> {
+  String qrCode = 'Unknown data ';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text('QR Code Scanner'),
+      appBar: AppBar(
+        title: Text("Scan QR Code"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              qrCode,
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              '---',
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white60,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            RaisedButton(
+              onPressed: () {
+                scanQrCode();
+              },
+              textColor: Colors.white,
+              color: Colors.blue,
+              padding: const EdgeInsets.all(10.0),
+              child: const Text('  Strat Scanning    ',
+                  style: TextStyle(fontSize: 20)),
+            )
+          ],
         ),
-        body: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
-                    onPressed: scan,
-                    child: const Text('START CAMERA SCAN')),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  barcode,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
-  Future scan() async {
+  Future<void> scanQrCode() async {
     try {
-      String barcode = await BarcodeScanner.scan() as String;
-      setState(() => this.barcode = barcode);
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.cameraAccessDenied) {
-        setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
-        });
-      } else {
-        setState(() => this.barcode = 'Unknown error: $e');
-      }
-    } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+
+      if (!mounted) return;
+
+      setState(() {
+        this.qrCode = qrCode;
+      });
+    } on PlatformException {
+      qrCode = 'Failed to get platform version.';
     }
   }
 }

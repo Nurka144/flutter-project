@@ -59,7 +59,7 @@ class _HomeBodyState extends State<HomeBody> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => QRScreen()),
+                MaterialPageRoute(builder: (context) => ScanQRCode()),
               );
             },
           ),
