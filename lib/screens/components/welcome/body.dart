@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:app_mobile_test/screens/components/welcome/background.dart';
 import 'package:app_mobile_test/components/rounded_button.dart';
 import 'package:app_mobile_test/screens/Login.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,7 +18,7 @@ class Body extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          "Добро пожаловать",
+          'welcome_title'.tr(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         SizedBox(
@@ -32,9 +34,7 @@ class Body extends StatelessWidget {
         RoundedButton(
           text: 'Войти в систему',
           press: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return LoginScreen();
-            }));
+            Navigator.pushNamed(context, LoginScreen.routerName);
           },
         )
       ],
