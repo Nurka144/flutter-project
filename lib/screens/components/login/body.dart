@@ -4,6 +4,7 @@ import 'package:app_mobile_test/screens/Home.dart';
 import 'package:app_mobile_test/screens/components/login/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sweetalert/sweetalert.dart';
 
 class LoginBody extends StatefulWidget {
   LoginBody({Key key}) : super(key: key);
@@ -12,8 +13,9 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   bool data = true;
-
   void _seePassword() {
     setState(() {
       data = !data;
@@ -44,6 +46,7 @@ class _LoginBodyState extends State<LoginBody> {
               onChanged: (value) {
                 print(value);
               },
+              controller: _emailController,
               decoration: InputDecoration(
                 icon: Icon(Icons.person),
                 hintText: "Введите email",
@@ -54,6 +57,7 @@ class _LoginBodyState extends State<LoginBody> {
           TextFieldContainer(
             child: TextField(
               obscureText: data,
+              controller: _passwordController,
               decoration: InputDecoration(
                 icon: Icon(Icons.lock),
                 hintText: "Введите пароль",
@@ -68,6 +72,22 @@ class _LoginBodyState extends State<LoginBody> {
           RoundedButton(
             text: "Войти",
             press: () {
+              List<String> errors = [];
+              if (_emailController.text == '') {
+                errors.add('Введите email');
+              }
+              if (_passwordController.text == '') {
+                errors.add('Введите пароль');
+              }
+              if (errors.length > 0) {
+                SweetAlert.show(
+                  context,
+                  title: 'Ошибка',
+                  subtitle: errors.join('\n'),
+                  style: SweetAlertStyle.error,
+                );
+                return true;
+              }
               Navigator.pushNamed(context, HomeScreen.routerName);
             },
           )
