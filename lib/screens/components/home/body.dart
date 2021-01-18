@@ -1,5 +1,8 @@
+import 'package:app_mobile_test/components/drawer.dart';
 import 'package:app_mobile_test/screens/QRSceen.dart';
+import 'package:app_mobile_test/screens/components/home/bannser-sliter.dart';
 import 'package:app_mobile_test/screens/components/home/home-nav-tabs.dart';
+import 'package:app_mobile_test/screens/components/home/sectionTitle.dart';
 import 'package:app_mobile_test/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,27 +18,7 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer Header'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () => Navigator.pop(context),
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () => Navigator.pop(context),
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerContainer(),
       body: Body(),
       appBar: AppBar(
         leading: Container(
@@ -139,106 +122,11 @@ class Body extends StatelessWidget {
               child: Row(
                 children: [
                   BannerSlider(),
-                  BannerSlider(),
-                  BannerSlider(),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class BannerSlider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20,
-      ),
-      child: SizedBox(
-        width: 240,
-        height: 100,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Stack(
-            children: [
-              Image.asset(
-                "assets/images/image_banner.png",
-                fit: BoxFit.cover,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF343434).withOpacity(0.4),
-                      Color(0xFF343434).withOpacity(0.15),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 10,
-                ),
-                child: Text.rich(
-                  TextSpan(
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    children: [
-                      TextSpan(text: "Смартфон \n"),
-                      TextSpan(text: "Модель: Samsung"),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SectionTitle extends StatelessWidget {
-  const SectionTitle({
-    Key key,
-    this.text,
-  }) : super(key: key);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 35,
-        left: 15,
-        right: 15,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            "Подробнее",
-            style: TextStyle(
-              color: Colors.black26,
-            ),
-          ),
-        ],
       ),
     );
   }
