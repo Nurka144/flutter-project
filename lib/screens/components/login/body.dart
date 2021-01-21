@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sweetalert/sweetalert.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginBody extends StatefulWidget {
   LoginBody({Key key}) : super(key: key);
@@ -19,6 +20,7 @@ class _LoginBodyState extends State<LoginBody> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool data = true;
+  bool loading = false;
   void _seePassword() {
     setState(() {
       data = !data;
@@ -46,9 +48,6 @@ class _LoginBodyState extends State<LoginBody> {
           ),
           TextFieldContainer(
             child: TextField(
-              onChanged: (value) {
-                print(value);
-              },
               controller: _emailController,
               decoration: InputDecoration(
                 icon: Icon(Icons.person),
@@ -75,6 +74,11 @@ class _LoginBodyState extends State<LoginBody> {
           RoundedButton(
             text: "Войти",
             press: () async {
+              SweetAlert.show(
+                context,
+                title: 'Загрузка',
+                style: SweetAlertStyle.error,
+              );
               await LoginUser(_emailController, _passwordController, context);
             },
           )
@@ -106,7 +110,16 @@ Future<void> LoginUser(email, password, context) async {
       .post(url, body: {'email': email.text, 'password': password.text});
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', data['token']);
     print(data['token']);
+    Navigator.pushNamed(context, HomeScreen.routerName);
+  } else {
+    SweetAlert.show(
+      context,
+      title: 'Ошибка',
+      style: SweetAlertStyle.error,
+    );
+    return;
   }
-  // Navigator.pushNamed(context, HomeScreen.routerName);
 }

@@ -39,6 +39,8 @@ dependencies:
   easy_localization: ^2.3.3
   sweetalert: ^0.0.1
   http: ^0.12.2
+  shared_preferences: ^0.5.10
+  path_provider: ^1.6.24
 
 dev_dependencies:
   flutter_test:

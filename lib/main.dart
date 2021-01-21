@@ -2,7 +2,6 @@ import 'package:app_mobile_test/constants.dart';
 import 'package:app_mobile_test/routes.dart';
 import 'package:app_mobile_test/screens/Welcome.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 void main() {
