@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app_mobile_test/components/rounded_button.dart';
 import 'package:app_mobile_test/components/text_field_container.dart';
 import 'package:app_mobile_test/screens/Home.dart';
@@ -5,6 +7,7 @@ import 'package:app_mobile_test/screens/components/login/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sweetalert/sweetalert.dart';
+import 'package:http/http.dart' as http;
 
 class LoginBody extends StatefulWidget {
   LoginBody({Key key}) : super(key: key);
@@ -71,28 +74,39 @@ class _LoginBodyState extends State<LoginBody> {
           ),
           RoundedButton(
             text: "Войти",
-            press: () {
-              List<String> errors = [];
-              if (_emailController.text == '') {
-                errors.add('Введите email');
-              }
-              if (_passwordController.text == '') {
-                errors.add('Введите пароль');
-              }
-              if (errors.length > 0) {
-                SweetAlert.show(
-                  context,
-                  title: 'Ошибка',
-                  subtitle: errors.join('\n'),
-                  style: SweetAlertStyle.error,
-                );
-                return true;
-              }
-              Navigator.pushNamed(context, HomeScreen.routerName);
+            press: () async {
+              await LoginUser(_emailController, _passwordController, context);
             },
           )
         ],
       ),
     ));
   }
+}
+
+Future<void> LoginUser(email, password, context) async {
+  List<String> errors = [];
+  if (email.text == '') {
+    errors.add('Введите email');
+  }
+  if (password.text == '') {
+    errors.add('Введите пароль');
+  }
+  if (errors.length > 0) {
+    SweetAlert.show(
+      context,
+      title: 'Ошибка',
+      subtitle: errors.join('\n'),
+      style: SweetAlertStyle.error,
+    );
+    return;
+  }
+  var url = 'https://backapiapp.herokuapp.com/auth/login';
+  final response = await http
+      .post(url, body: {'email': email.text, 'password': password.text});
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    print(data['token']);
+  }
+  // Navigator.pushNamed(context, HomeScreen.routerName);
 }
