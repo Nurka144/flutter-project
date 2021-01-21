@@ -105,9 +105,11 @@ Future<void> LoginUser(email, password, context) async {
     );
     return;
   }
+  print('loading');
   var url = 'https://backapiapp.herokuapp.com/auth/login';
   final response = await http
       .post(url, body: {'email': email.text, 'password': password.text});
+  print('end loading');
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     SharedPreferences prefs = await SharedPreferences.getInstance();
