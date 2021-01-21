@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sweetalert/sweetalert.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginBody extends StatefulWidget {
   LoginBody({Key key}) : super(key: key);
@@ -74,10 +75,9 @@ class _LoginBodyState extends State<LoginBody> {
           RoundedButton(
             text: "Войти",
             press: () async {
-              SweetAlert.show(
-                context,
-                title: 'Загрузка',
-                style: SweetAlertStyle.error,
+              await EasyLoading.show(
+                status: 'loading...',
+                maskType: EasyLoadingMaskType.black,
               );
               await LoginUser(_emailController, _passwordController, context);
             },
@@ -117,6 +117,7 @@ Future<void> LoginUser(email, password, context) async {
     print(data['token']);
     Navigator.pushNamed(context, HomeScreen.routerName);
   } else {
+    EasyLoading.dismiss();
     SweetAlert.show(
       context,
       title: 'Ошибка',
