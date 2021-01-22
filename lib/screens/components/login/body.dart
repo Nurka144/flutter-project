@@ -76,7 +76,7 @@ class _LoginBodyState extends State<LoginBody> {
             text: "Войти",
             press: () async {
               await EasyLoading.show(
-                status: 'loading...',
+                status: 'Loading...',
                 maskType: EasyLoadingMaskType.black,
               );
               await LoginUser(_emailController, _passwordController, context);
@@ -105,22 +105,21 @@ Future<void> LoginUser(email, password, context) async {
     );
     return;
   }
-  print('loading');
   var url = 'https://backapiapp.herokuapp.com/auth/login';
   final response = await http
       .post(url, body: {'email': email.text, 'password': password.text});
-  print('end loading');
+  final data = jsonDecode(response.body);
+  EasyLoading.dismiss();
   if (response.statusCode == 200) {
-    final data = jsonDecode(response.body);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', data['token']);
     print(data['token']);
     Navigator.pushNamed(context, HomeScreen.routerName);
   } else {
-    EasyLoading.dismiss();
     SweetAlert.show(
       context,
       title: 'Ошибка',
+      subtitle: data['message'],
       style: SweetAlertStyle.error,
     );
     return;
