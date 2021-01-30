@@ -1,4 +1,4 @@
-import 'package:app_mobile_test/screens/components/home/body.dart';
+import 'package:app_mobile_test/screens/components/home/main_body.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,7 +6,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeBody(),
+      body: Body(),
     );
   }
 }
