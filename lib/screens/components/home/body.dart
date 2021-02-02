@@ -1,4 +1,5 @@
 import 'package:app_mobile_test/constants.dart';
+import 'package:app_mobile_test/screens/Detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -44,7 +45,11 @@ class _HomeBodyState extends State<HomeBody> {
                         ),
                       ),
                       Spacer(),
-                      Text('Logo User'),
+                      Icon(
+                        Icons.account_circle_rounded,
+                        color: Colors.white,
+                        size: 40,
+                      )
                     ],
                   ),
                 ),
@@ -124,6 +129,12 @@ class _HomeBodyState extends State<HomeBody> {
                     title: "Samantha",
                     country: "Russia",
                     count: 440,
+                    onClick: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailScreen()))
+                    },
                   ),
                   SizedBox(
                     width: 10,
@@ -215,10 +226,12 @@ class ProductCard extends StatelessWidget {
     this.title,
     this.count,
     this.country,
+    this.onClick,
   }) : super(key: key);
 
   final String title, country, image;
   final int count;
+  final Function onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -231,7 +244,7 @@ class ProductCard extends StatelessWidget {
           children: [
             Image.asset(image),
             GestureDetector(
-              onTap: () => {},
+              onTap: onClick,
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(

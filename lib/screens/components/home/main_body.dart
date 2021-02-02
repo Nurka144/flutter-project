@@ -89,16 +89,19 @@ class _BodyState extends State<Body> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: SvgPicture.asset('assets/icons/home.svg'),
+            icon: Icon(Icons.home),
             onPressed: () => {},
+            iconSize: 35,
           ),
           IconButton(
-            icon: SvgPicture.asset('assets/icons/add.svg'),
+            icon: Icon(Icons.control_point),
             onPressed: () => {},
+            iconSize: 35,
           ),
           IconButton(
-            icon: SvgPicture.asset('assets/icons/user (1).svg'),
+            icon: Icon(Icons.account_circle_outlined),
             onPressed: () => {},
+            iconSize: 35,
           ),
         ],
       ),
