@@ -101,6 +101,65 @@ class _HomeBodyState extends State<HomeBody> {
               ],
             ),
           ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                Text(
+                  'Последние просмотренные',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                )
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                children: [
+                  ProductCard(
+                    image: "assets/images/image_1.png",
+                    title: "Samantha",
+                    country: "Russia",
+                    count: 440,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ProductCard(
+                    image: "assets/images/image_1.png",
+                    title: "Samantha",
+                    country: "Russia",
+                    count: 440,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ProductCard(
+                    image: "assets/images/image_1.png",
+                    title: "Samantha",
+                    country: "Russia",
+                    count: 440,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 10, top: 20),
+            padding: EdgeInsets.only(left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Последние добавленные',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
           Products(),
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,12 +173,10 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: double.infinity,
       child: Wrap(
         alignment: WrapAlignment.spaceAround,
-        runSpacing: 10,
         children: [
           ProductCard(
             image: "assets/images/image_1.png",
@@ -166,59 +223,62 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: size.width * .45,
-      child: Column(
-        children: [
-          Image.asset(image),
-          GestureDetector(
-            onTap: () => {},
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 50,
-                    color: kPrimaryColor.withOpacity(0.23),
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: SizedBox(
+        width: size.width * .45,
+        child: Column(
+          children: [
+            Image.asset(image),
+            GestureDetector(
+              onTap: () => {},
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
                   ),
-                ],
-              ),
-              child: Row(
-                children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: "$title\n".toUpperCase(),
-                            style: Theme.of(context).textTheme.button),
-                        TextSpan(
-                          text: "$country".toUpperCase(),
-                          style: TextStyle(
-                            color: kPrimaryColor.withOpacity(0.5),
-                          ),
-                        ),
-                      ],
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 50,
+                      color: kPrimaryColor.withOpacity(0.23),
                     ),
-                  ),
-                  Spacer(),
-                  Text(
-                    '\$$count',
-                    style: Theme.of(context)
-                        .textTheme
-                        .button
-                        .copyWith(color: kPrimaryColor),
-                  )
-                ],
+                  ],
+                ),
+                child: Row(
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "$title\n".toUpperCase(),
+                              style: Theme.of(context).textTheme.button),
+                          TextSpan(
+                            text: "$country".toUpperCase(),
+                            style: TextStyle(
+                              color: kPrimaryColor.withOpacity(0.5),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      '\$$count',
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          .copyWith(color: kPrimaryColor),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

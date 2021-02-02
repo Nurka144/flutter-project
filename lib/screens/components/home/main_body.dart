@@ -20,40 +20,7 @@ class _BodyState extends State<Body> {
       drawer: DrawerContainer(),
       body: HomeBody(),
       appBar: buildAppBar(),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.only(
-          left: 40,
-          right: 40,
-        ),
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, -10),
-              blurRadius: 35,
-              color: kPrimaryColor.withOpacity(0.38),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: SvgPicture.asset('assets/icons/home.svg'),
-              onPressed: () => {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset('assets/icons/add.svg'),
-              onPressed: () => {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset('assets/icons/user (1).svg'),
-              onPressed: () => {},
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 
@@ -98,6 +65,43 @@ class _BodyState extends State<Body> {
           width: SizeConfig.defaultSize,
         )
       ],
+    );
+  }
+
+  Container buildBottomNavigationBar() {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 40,
+        right: 40,
+      ),
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, -10),
+            blurRadius: 35,
+            color: kPrimaryColor.withOpacity(0.38),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: SvgPicture.asset('assets/icons/home.svg'),
+            onPressed: () => {},
+          ),
+          IconButton(
+            icon: SvgPicture.asset('assets/icons/add.svg'),
+            onPressed: () => {},
+          ),
+          IconButton(
+            icon: SvgPicture.asset('assets/icons/user (1).svg'),
+            onPressed: () => {},
+          ),
+        ],
+      ),
     );
   }
 }
