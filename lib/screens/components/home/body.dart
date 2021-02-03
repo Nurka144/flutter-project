@@ -280,7 +280,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      '\$$count',
+                      "$count",
                       style: Theme.of(context)
                           .textTheme
                           .button
