@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DetailBody extends StatelessWidget {
+  final String dataProduct;
+
+  const DetailBody({
+    Key key,
+    this.dataProduct,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,7 +32,7 @@ class DetailBody extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
-                        children: [Text('asca')],
+                        children: [Text(dataProduct)],
                       )
                     ],
                   ),
