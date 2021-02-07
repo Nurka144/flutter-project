@@ -1,5 +1,6 @@
 import 'package:app_mobile_test/components/drawer.dart';
 import 'package:app_mobile_test/constants.dart';
+import 'package:app_mobile_test/screens/Detail.dart';
 import 'package:app_mobile_test/screens/components/detail/body.dart';
 import 'package:app_mobile_test/size_config.dart';
 import 'package:flutter/material.dart';
@@ -85,8 +86,8 @@ class _BodyState extends State<Body> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailBody(
-              dataProduct: dataQR,
+            builder: (context) => DetailScreen(
+              dataDetail: dataQR,
             ),
           ),
         );
