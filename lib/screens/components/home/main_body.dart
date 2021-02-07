@@ -5,6 +5,8 @@ import 'package:app_mobile_test/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app_mobile_test/screens/components/home/body.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter/services.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);
@@ -13,6 +15,9 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  String dataQR = "";
+  String dataBarCode = "";
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -46,15 +51,12 @@ class _BodyState extends State<Body> {
             height: SizeConfig.defaultSize * 2,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ScanQRCode()),
-            );
+            scanQrCode();
           },
         ),
         Center(
           child: Text(
-            "Scan",
+            dataQR,
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -66,6 +68,33 @@ class _BodyState extends State<Body> {
         )
       ],
     );
+  }
+
+  Future<void> scanQrCode() async {
+    try {
+      final dataQR = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Отмена',
+        true,
+        ScanMode.QR,
+      );
+
+      final dataBarCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Отмена',
+        true,
+        ScanMode.BARCODE,
+      );
+
+      if (!mounted) return;
+
+      setState(() {
+        this.dataQR = dataQR;
+        this.dataBarCode = dataBarCode;
+      });
+    } on PlatformException {
+      dataQR = 'Failed to get platform version.';
+    }
   }
 
   Container buildBottomNavigationBar() {
