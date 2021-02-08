@@ -1,6 +1,7 @@
 import 'package:app_mobile_test/components/drawer.dart';
 import 'package:app_mobile_test/constants.dart';
 import 'package:app_mobile_test/screens/Detail.dart';
+import 'package:app_mobile_test/screens/NewProduct.dart';
 import 'package:app_mobile_test/screens/components/detail/body.dart';
 import 'package:app_mobile_test/size_config.dart';
 import 'package:flutter/material.dart';
@@ -124,7 +125,7 @@ class _BodyState extends State<Body> {
           ),
           IconButton(
             icon: Icon(Icons.control_point),
-            onPressed: () => {},
+            onPressed: () => {Navigator.pushNamed(context, NewProductScreen.routerName)},
             iconSize: 35,
           ),
           IconButton(
