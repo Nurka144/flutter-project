@@ -32,7 +32,9 @@ class DetailBody extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
-                        children: [Text(dataProduct)],
+                        children: [
+                          Text(dataProduct != null ? dataProduct : '')
+                        ],
                       )
                     ],
                   ),

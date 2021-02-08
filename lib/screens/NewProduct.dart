@@ -1,3 +1,4 @@
+import 'package:app_mobile_test/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mobile_test/screens/components/newproduct/body.dart';
 
@@ -7,7 +8,9 @@ class NewProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NewProductBody()
+      backgroundColor: kPrimaryColor,
+      appBar: AppBar(),
+      body: NewProductBody(),
     );
   }
 }
