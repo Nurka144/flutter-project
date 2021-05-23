@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:app_mobile_test/components/rounded_button.dart';
 import 'package:app_mobile_test/components/text_field_container.dart';
@@ -75,10 +76,10 @@ class _LoginBodyState extends State<LoginBody> {
           RoundedButton(
             text: "Войти",
             press: () async {
-              await EasyLoading.show(
-                status: 'Loading...',
-                maskType: EasyLoadingMaskType.black,
-              );
+              // await EasyLoading.show(
+              //   status: 'Loading...',
+              //   maskType: EasyLoadingMaskType.black,
+              // );
               await LoginUser(_emailController, _passwordController, context);
             },
           )
@@ -105,9 +106,41 @@ Future<void> LoginUser(email, password, context) async {
     );
     return;
   }
+  print(email.text);
+  print(password.text);
+
+  const String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var encrypted = [];
+
+  const p = 3;
+  const q = 11;
+  const n = p * q;
+  const d = /* (p - 1) * (q - 1) */ 3;
+  const e = 7;
+
+  for (int i = 0; i < email.text.length; i++) {
+    var random = Random.secure();
+    var values =
+        List<int>.generate(email.text.length, (i) => random.nextInt(255));
+    var chars = base64UrlEncode(values);
+    final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*))|@)$');
+    if (numericRegex.hasMatch(email.text[i])) {
+      encrypted.add(chars);
+      encrypted.add('&?${email.text[i]}&');
+    }
+    for (int j = 0; j < alphabet.length; j++) {
+      if (email.text[i].toUpperCase() == alphabet[j].toUpperCase()) {
+        encrypted.add(chars);
+        print(email.text[i]);
+        print(pow(j, e) % n);
+        encrypted.add('&${pow(j, e) % n}&');
+      }
+    }
+  }
+
   var url = 'https://backapiapp.herokuapp.com/auth/login';
   final response = await http
-      .post(url, body: {'email': email.text, 'password': password.text});
+      .post(url, body: {'email': encrypted.join(), 'password': password.text});
   final data = jsonDecode(response.body);
   EasyLoading.dismiss();
   if (response.statusCode == 200) {
